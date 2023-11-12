@@ -1,0 +1,105 @@
+{
+	"layer": "top",
+	"position": "top",
+	"height": 24,
+	"margin-top": 10,
+	"margin-right": 10,
+	"margin-bottom": 0,
+	"margin-left": 10,
+	"spacing": 5,
+
+	"modules-left": [
+		"backlight",
+		"cpu",
+		"memory",
+		"hyprland/window"
+	],
+	"modules-center": ["hyprland/workspaces"],
+	"modules-right": [
+		//"custom/testscript",
+		"bluetooth",
+		"wireplumber",
+		"battery",
+		"battery#bat2",
+		"network",
+		"clock"
+	],
+
+	"hyprland/window": {
+		//"format": ""
+	},
+	"hyprland/workspaces": {
+		//"format": ""
+	},
+	"custom/testscript": {
+		"tooltip": false,
+	        "max-length": 6,
+        	"signal": 8,
+	        "restart-interval": 1000,
+		"exec": "/home/stk/.bashscripts/test-waybar.sh"
+	},
+	"bluetooth": {
+		"format": ""
+	},
+	"wireplumber": {
+		"tooltip": false,
+		"states": {
+			"normal": 5,
+			"silent": 0
+		},
+		"format": "{volume}% <span size='x-large'>{icon}</span>",
+		"format-icons": ""
+	},
+	"custom/wireplumber": {
+        	"tooltip": false,
+        	"max-length": 6,
+        	"signal": 8,
+        	"restart-interval": 0,
+        	"exec": "/home/stk/.bashscripts/wireplumber-waybar.sh"
+	},
+	"battery": {
+		"states": {
+			"good": 95,
+			"warning": 20,
+			"critical": 10
+		},
+		"format": "{capacity}% <span size='x-large'>{icon}</span>   remaining: {time}",
+		"format-charging": "{capacity}% <span size='x-large'>{icon}</span>      time to full: {time}",
+		"format-plugged": "BAT: {capacity}% ~",
+		"format-alt": "{capacity}% <span size='x-large'>{icon}</span>",
+		"format-icons": {
+			"default": ["󰂎", "󱊢", "󱊢", "󱊣"],
+			"charging": ["󰢟", "󱊤", "󱊥", "󱊦"]
+		}
+	},
+	"battery#bat2": {
+		"bat": "BAT2"
+	},
+	"backlight": {
+		"format": "{percent}% <span size='large'></span>"
+	},
+	"cpu": {
+		"format": "{usage}% <span size='x-large'>󰻠</span>"
+	},
+	"memory": {
+		"format": "{}% <span size='x-large'>󰍛</span>"
+	},
+	"network": {
+		"format-wifi": "{essid} <span size='x-large'>{icon}</span>", //signalStrength
+        	"format-ethernet": "{ifname}: {ipaddr}/{cidr} <span size='x-large'>{icon}</span>",
+	        "tooltip-format": "{ifname} via {gwaddr}",
+	        "format-linked": "{ifname} (No IP)",
+	        "format-disconnected": "Disconnected  <span size='x-large'>{icon}</span>",
+	        "format-alt": "{ifname}: {ipaddr}/{cidr} ({signalStrength}%) <span size='x-large'>{icon}</span>",
+		"format-icons": {
+			"default": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+			"disconnected": ["󰤮"],
+			"ethernet": [""]
+		}
+	},
+	"clock": {
+		"format": "{:%a, %d. %b  %H:%M}  <span size='x-large'></span>",
+		"format-alt": "{:%H:%M}  <span size='x-large'></span>",
+		"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+	}
+}
