@@ -1,0 +1,86 @@
+(defwindow powermenu
+  :monitor 0
+  :stacking "overlay"
+  :exclusive "false"
+  :focusable "true"
+  :windowtype "normal"
+  :wm-ignore true
+  :geometry (geometry
+              :width "1920px"
+              :height "1080px"
+              :x "0"
+              :y "-34px"
+              :anchor "top left")
+  (box :orientation "h" :class "bx"
+    (box :orientation "v" :class "cancel"
+      (button :onclick "eww close powermenu" "Cancel"))
+    (box :orientation "v" :class "logout"
+      (button :onclick "hyprctl dispatch exit 1" "Logout"))
+;;    (box :orientation "v" :class "sleep"
+;;      (button :onclick "eww close powermenu" "Sleep"))
+    (box :orientation "v" :class "reboot"
+      (button :onclick "reboot" "Reboot"))
+    (box :orientation "v" :class "poweroff"
+      (button :onclick "poweroff" "Poweroff"))))
+
+(deflisten playerctl-current-song :initial "whatever"
+  `/home/stk/untitled/rust/projects/hyprland_eww_tools/playerctl_length_cut/target/release/playerctl_length_cut`)
+(deflisten hyprland-window-title :initial ""
+  `RUST_BACKTRACE=1 /home/stk/untitled/rust/projects/hyprland_eww_tools/ipc_listener/target/release/ipc_listener && notify-send "ipc_listener crashed!"`)
+(deflisten hyprland-workspace-literal :initial ""
+  `cat /tmp/hypr_eww_ipc_listener_pipe`)
+(deflisten battery `/home/stk/untitled/rust/projects/hyprland_eww_tools/battery_fetcher/target/release/battery_fetcher`)
+(deflisten pipewire-volume :initial "fuck"
+  `/home/stk/untitled/rust/projects/hyprland_eww_tools/pipewire_update_on_change/target/release/pipewire_update_on_change`)
+
+(defvar my-json "[1, 2, 3]")
+
+(defwidget greeter [?text name]
+  (box :orientation "horizontal"
+       :halign "center"
+    text
+    (button :onclick "notify-send 'Hello' 'Hello, ${name}'"
+      "Greet")
+    ;(for entry in my-json
+    ;(button :onclick "notify-send 'click' 'button ${entry}'"
+      ;entry))
+    (button :onclick "eww close bar"
+      "Exit")))
+
+(defwindow bar
+           :monitor 0
+           :geometry (geometry :x "0%"
+                               :y "0"
+                               :width "100%"
+                               :height "30px"
+                               :anchor "top center")
+           :stacking "fg"
+           :exclusive true
+           :focusable false
+           ;:namespace ""
+           :windowtype "dock"
+  (centerbox :orientation "h"
+    (box :orientation "h" :halign "start" :space-evenly false
+      (literal :content "${hyprland-workspace-literal}")
+      "${hyprland-window-title}")
+    (box :orientation "h" :space-evenly false
+      (label :class "smaller_icon" :text "")
+      (label :class "module" :text "${formattime(EWW_TIME, "%a, %e. %b", "Europe/Berlin")}")
+      (label :class "icon clock-icon" :text "")
+      (label :class "module" :text "${formattime(EWW_TIME, "%k:%M", "Europe/Berlin")}"))
+    (box :orientation "h" :halign "end" :space-evenly false
+      (box :class "module" :space-evenly false
+        (label :class "icon" :text "")
+        "${playerctl-current-song}")
+      (box :class "module" :space-evenly false
+       (label :class "icon" :text "${battery.icon}") 
+        "${battery.total_capacity}% (${battery.time_remaining_hours} h ${battery.time_remaining_mins} min)")
+      (box :class "module" :space-evenly false
+       (label :class "${pipewire-volume.class}" :text "${pipewire-volume.icon}") 
+        "${pipewire-volume.perc}%")
+      (box :class "module"
+        (label :class "icon extra-margin-right" :text "󰻠")
+        "${round(EWW_CPU.avg, 0)}%")
+      (box :class "module"
+        (label :class "icon" :text "󰍛")
+        "${round(EWW_RAM.used_mem_perc, 0)}%"))))

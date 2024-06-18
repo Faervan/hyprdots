@@ -1,0 +1,64 @@
+* {
+  font-family: monospace;
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+}
+
+window {
+  background-color: rgba(0,0,0,0.5);
+}
+
+.module {
+  margin: 0 8px;
+}
+
+.icon {
+  font-size: 19px;
+  margin: 0 8px 0 0;
+}
+
+.bigger-icon-font {
+  font-size: 23px;
+}
+
+.extra-margin-right {
+  margin-right: 12px;
+}
+
+.clock-icon {
+  margin: 0 6px 0 12px;
+}
+
+.smaller_icon {
+  font-size: 16px;
+}
+
+.workspaces label {
+  font-size: 19px;
+}
+
+.workspaces .workspace_event_box {
+  min-width: 50px;
+}
+
+.active {
+  border-radius: 10px;
+  border: 2px solid white;
+}
+
+.workspace_1 > label,
+.workspace_2 > label,
+.workspace_3 > label {
+  margin-left: -6px;
+}
+
+.workspace_4 > label {
+  margin-left: -2px;
+}
+
+.workspace_5 > label {
+  font-size: 22px;
+  margin: 1px 0 0 -8px;
+}
